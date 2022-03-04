@@ -6,12 +6,24 @@ Terraform module which build your lambda only when your source code changes.
 
 ```hcl
 module "lambda-go" {
-  name            = "test"
+  source          = "kh42z/lambda-go/aws"
+  version         = 0.0.2
+  name            = "example"
   src_path        = "./src"
-  iam_policy_json = data.aws_iam_policy_document.example-ssm-secrets.json
+  iam_policy_json = data.aws_iam_policy_document.example-ssm.json
   env_variables = {
     REGION      = "us-east-1"
   }
-  source = "git@github.com:kh42z/terraform-aws-lambda-go.git"
+}
+
+
+data "aws_iam_policy_document" "example-ssm" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "ssm:GetParameter"
+    ]
+    resources = []
+  }
 }
 ```

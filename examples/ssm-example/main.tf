@@ -1,4 +1,6 @@
 module "lambda-go" {
+  source          = "kh42z/lambda-go/aws"
+  version         = "0.0.2"
   name            = "test"
   src_path        = "./src"
   iam_policy_json = data.aws_iam_policy_document.example-ssm-secrets.json
@@ -6,7 +8,6 @@ module "lambda-go" {
     REGION      = "us-east-1"
     DB_PASSWORD = data.aws_ssm_parameter.example_db_password.name
   }
-  source = "git@github.com:kh42z/terraform-aws-lambda-go.git"
 }
 
 data "aws_iam_policy_document" "example-ssm-secrets" {
